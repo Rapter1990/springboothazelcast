@@ -1,6 +1,6 @@
 package com.springboot.hazelcast.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,14 +13,16 @@ import java.util.Set;
 @ToString
 @RequiredArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties({"movies"})
 public class Director implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NonNull
     private String name;
 
-    @OneToMany(mappedBy="director",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="director",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Movie> movies;
 }

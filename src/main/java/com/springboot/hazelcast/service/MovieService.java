@@ -27,9 +27,7 @@ public class MovieService implements IMovieService {
 
     @Override
     public List<Movie> findAll() {
-        List<Movie> movieList = new ArrayList<>();
-        movieRepository.findAll().forEach(movieList::add);
-        return movieList;
+        return (List<Movie>) movieRepository.findAll();
     }
 
     @Override

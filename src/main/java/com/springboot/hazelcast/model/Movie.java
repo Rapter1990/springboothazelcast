@@ -1,13 +1,10 @@
 package com.springboot.hazelcast.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,15 +21,14 @@ public class Movie implements Serializable {
 
     private String name;
 
-    @OneToMany(mappedBy="movie",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="movie",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Genre> genres;
 
     private Double rating;
 
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private LocalDate createdAt;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn
     private Director director;
 }
