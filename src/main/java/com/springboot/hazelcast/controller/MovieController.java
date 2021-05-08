@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +24,7 @@ public class MovieController {
     @Autowired
     MovieService movieService;
 
-    @Cacheable("movies-cache")
+    @Cacheable("movies")
     @GetMapping("/find/all")
     public List<Movie> findAll() {
         LOG.info("Getting All Movies");
@@ -58,5 +59,10 @@ public class MovieController {
     public void deleteMovieByID(@PathVariable Long id) {
         LOG.info("Deleting Movie with id {}", id);
         movieService.deleteMovieByID(id);
+    }
+
+    @GetMapping(value = "/read-all-data")
+    public Collection<Object> getAllData() {
+        return movieService.readAllDataFromHazelcast();
     }
 }

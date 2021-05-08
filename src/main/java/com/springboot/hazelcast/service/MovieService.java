@@ -1,5 +1,6 @@
 package com.springboot.hazelcast.service;
 
+import com.hazelcast.core.HazelcastInstance;
 import com.springboot.hazelcast.model.Movie;
 import com.springboot.hazelcast.repository.MovieRepository;
 import com.springboot.hazelcast.service.impl.IMovieService;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +22,8 @@ public class MovieService implements IMovieService {
 
     @Autowired
     MovieRepository movieRepository;
+
+    HazelcastInstance hazelcastInstance;
 
     @Override
     public List<Movie> findAll() {
@@ -70,5 +74,9 @@ public class MovieService implements IMovieService {
             Movie deletedMovie= movie.get();
             movieRepository.delete(deletedMovie);
         }
+    }
+
+    public Collection<Object> readAllDataFromHazelcast() {
+        return hazelcastInstance.getMap("movies-cache").values();
     }
 }
