@@ -22,7 +22,7 @@ public class Movie implements Serializable {
 
     private String name;
 
-    @OneToMany(mappedBy="movie")
+    @OneToMany(mappedBy="movie",cascade = CascadeType.ALL)
     private Set<Genre> genres;
 
     private Double rating;

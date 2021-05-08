@@ -21,6 +21,6 @@ public class Director implements Serializable {
     @NonNull
     private String name;
 
-    @OneToMany(mappedBy="director")
+    @OneToMany(mappedBy="director",cascade = CascadeType.ALL)
     private Set<Movie> movies;
 }
