@@ -3,10 +3,13 @@ package com.springboot.hazelcast.service;
 import com.springboot.hazelcast.model.Movie;
 import com.springboot.hazelcast.repository.MovieRepository;
 import com.springboot.hazelcast.service.impl.IMovieService;
+import com.springboot.hazelcast.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,9 +34,13 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public void save(Movie movie) {
+    public Movie save(Movie movie) throws ParseException {
 
-        movieRepository.save(movie);
+        LocalDate now = Utils.formatDate(LocalDate.now());
+
+        movie.setCreatedAt(now);
+
+        return movieRepository.save(movie);
     }
 
     @Override

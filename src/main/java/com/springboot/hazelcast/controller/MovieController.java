@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +39,7 @@ public class MovieController {
 
     @CachePut(value = "movies", key = "#movie.id")
     @PostMapping("/save")
-    public Movie saveEmployee(@RequestBody Movie employee) {
+    public Movie saveEmployee(@RequestBody Movie employee) throws ParseException {
         LOG.info("Saving Movie.");
         movieService.save(employee);
         return employee;
