@@ -20,7 +20,7 @@ public class Genre implements Serializable {
     @NonNull
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn
     private Movie movie;
 }

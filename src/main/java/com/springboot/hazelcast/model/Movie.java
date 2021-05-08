@@ -29,7 +29,7 @@ public class Movie implements Serializable {
 
     private LocalDate createdAt;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn
     private Director director;
 }
