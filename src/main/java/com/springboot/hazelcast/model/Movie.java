@@ -1,6 +1,7 @@
 package com.springboot.hazelcast.model;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,6 +28,7 @@ public class Movie implements Serializable {
 
     private Double rating;
 
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private LocalDate createdAt;
 
     @ManyToOne(cascade=CascadeType.ALL)
