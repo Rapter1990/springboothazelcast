@@ -38,7 +38,6 @@ public class MovieController {
         return movieService.findById(id);
     }
 
-    @CachePut(value = "movies", key = "#movie.id")
     @PostMapping("/save")
     public Movie saveMovie(@RequestBody Movie movie) throws ParseException {
         LOG.info("MovieController | Saving Movie.");
