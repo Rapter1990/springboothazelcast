@@ -1,5 +1,7 @@
 package com.springboot.hazelcast.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,6 +15,7 @@ import java.util.Set;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Movie implements Serializable {
 
     @Id
@@ -21,12 +24,14 @@ public class Movie implements Serializable {
 
     private String name;
 
+    @JsonManagedReference
     @OneToMany(mappedBy="movie",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Genre> genres;
 
     private Double rating;
 
     private LocalDate createdAt;
+
 
     @ManyToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn

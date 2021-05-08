@@ -1,6 +1,8 @@
 package com.springboot.hazelcast.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +24,7 @@ public class Genre implements Serializable {
     @NonNull
     private String name;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn
     private Movie movie;

@@ -85,6 +85,7 @@ public class MovieService implements IMovieService {
 
         movieRepository.findById(id).ifPresentOrElse(existingMovie -> {
 
+                existingMovie.setId(id);
                 existingMovie.setName(movie.getName());
                 existingMovie.setRating(movie.getRating());
                 existingMovie.setDirector(movie.getDirector());
