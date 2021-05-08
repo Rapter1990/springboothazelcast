@@ -21,7 +21,6 @@ public class Director implements Serializable {
     @NonNull
     private String name;
 
-    @JsonIgnore
     @OneToMany(mappedBy="director",cascade = CascadeType.ALL)
     private Set<Movie> movies;
 }
