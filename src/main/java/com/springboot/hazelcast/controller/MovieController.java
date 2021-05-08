@@ -38,6 +38,25 @@ public class MovieController {
         return movieService.findById(id);
     }
 
+    /*
+
+    {
+        "name": "MovieB",
+        "genres": [
+            {
+                "name" : "Comedy"
+            },
+            {
+                "name" : "Action"
+            }
+        ],
+        "rating" : 8.5,
+        "director" : {
+            "name" : "Director 1"
+        }
+    }
+    * */
+
     @PostMapping("/save")
     public Movie saveMovie(@RequestBody Movie movie) throws ParseException {
         LOG.info("MovieController | Saving Movie.");
@@ -45,6 +64,25 @@ public class MovieController {
         return movie;
     }
 
+    /*
+        {
+            "name": "MovieC",
+            "genres": [
+                {
+                    "name" : "Adventure"
+                },
+                {
+                    "name" : "Action"
+                }
+            ],
+            "createdAt": "2021-04-28",
+                "rating" : 9,
+                "director" : {
+            "name" : "Director 2"
+        }
+        }
+
+    * */
     @CachePut(value = "movies", key = "#id")
     @PutMapping("/update/{id}")
     public Movie updateMovie(@RequestBody Movie movie,@PathVariable Long id) {
