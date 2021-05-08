@@ -27,29 +27,29 @@ public class MovieController {
     @Cacheable("movies")
     @GetMapping("/find/all")
     public List<Movie> findAll() {
-        LOG.info("Getting All Movies");
+        LOG.info("MovieController | Getting All Movies");
         return movieService.findAll();
     }
 
     @Cacheable(value = "movies", key = "#id")
     @GetMapping("/find/{id}")
     public Optional<Movie> findById(@PathVariable Long id) {
-        LOG.info("Getting Movie with ID {}.", id);
+        LOG.info("MovieController | Getting Movie with ID {}.", id);
         return movieService.findById(id);
     }
 
     @CachePut(value = "movies", key = "#movie.id")
     @PostMapping("/save")
     public Movie saveMovie(@RequestBody Movie movie) throws ParseException {
-        LOG.info("Saving Movie.");
+        LOG.info("MovieController | Saving Movie.");
         movieService.save(movie);
         return movie;
     }
 
-    @CachePut(value = "movies", key = "#movie.id")
+    @CachePut(value = "movies", key = "#id")
     @PutMapping("/update/{id}")
     public Movie updateMovie(@RequestBody Movie movie,@PathVariable Long id) {
-        LOG.info("Updating Movie with id {}", id);
+        LOG.info("MovieController | Updating Movie with id {}", id);
         movieService.update(id,movie);
         return movie;
     }
@@ -57,12 +57,13 @@ public class MovieController {
     @CacheEvict(value = "movies", allEntries=true)
     @DeleteMapping("delete/{id}")
     public void deleteMovieByID(@PathVariable Long id) {
-        LOG.info("Deleting Movie with id {}", id);
+        LOG.info("MovieController | Deleting Movie with id {}", id);
         movieService.deleteMovieByID(id);
     }
 
     @GetMapping(value = "/read-all-data")
     public Collection<Object> getAllData() {
+        LOG.info("get All Data from Hazelcast");
         return movieService.readAllDataFromHazelcast();
     }
 }
