@@ -29,7 +29,7 @@ public class MovieController {
         return movieService.findAll();
     }
 
-    @Cacheable(value = "movies", key = "#id")
+    @Cacheable(value = "movies", key = "#movie.id")
     @GetMapping("/find/{id}")
     public Optional<Movie> findById(@PathVariable Long id) {
         LOG.info("Getting Movie with ID {}.", id);
