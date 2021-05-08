@@ -39,7 +39,7 @@ public class MovieController {
 
     @CachePut(value = "movies", key = "#movie.id")
     @PostMapping("/save")
-    public Movie saveEmployee(@RequestBody Movie movie) throws ParseException {
+    public Movie saveMovie(@RequestBody Movie movie) throws ParseException {
         LOG.info("Saving Movie.");
         movieService.save(movie);
         return movie;
@@ -47,7 +47,7 @@ public class MovieController {
 
     @CachePut(value = "movies", key = "#movie.id")
     @PutMapping("/update/{id}")
-    public Movie updateEmployee(@RequestBody Movie movie,@PathVariable Long id) {
+    public Movie updateMovie(@RequestBody Movie movie,@PathVariable Long id) {
         LOG.info("Updating Movie with id {}", id);
         movieService.update(id,movie);
         return movie;
@@ -55,7 +55,7 @@ public class MovieController {
 
     @CacheEvict(value = "movies", allEntries=true)
     @DeleteMapping("delete/{id}")
-    public void deleteEmployeeByID(@PathVariable Long id) {
+    public void deleteMovieByID(@PathVariable Long id) {
         LOG.info("Deleting Movie with id {}", id);
         movieService.deleteMovieByID(id);
     }
