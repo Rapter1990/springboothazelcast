@@ -83,30 +83,29 @@ public class MovieService implements IMovieService {
     @Override
     public void update(Long id,Movie movie) {
 
-        movieRepository.findById(id).ifPresentOrElse(existingMovie -> {
+        boolean isUpdatingEmployee = (movie.getId() == id);
 
-                existingMovie.setId(id);
-                existingMovie.setName(movie.getName());
-                existingMovie.setRating(movie.getRating());
-                existingMovie.setDirector(movie.getDirector());
-                existingMovie.setGenres(movie.getGenres());
-                existingMovie.setCreatedAt(movie.getCreatedAt());
+        if (isUpdatingEmployee) {
+            Movie existingMovie = movieRepository.findById(movie.getId()).get();
 
-                LOG.info("MovieService | update | Movie Id : " +id);
-                LOG.info("MovieService | update | Movie Name : " +movie.getName());
-                LOG.info("MovieService | update | Movie Created Date : " + movie.getCreatedAt());
-                LOG.info("MovieService | update | Movie Rating : " + movie.getRating());
-                LOG.info("MovieService | update | Movie Director : " +movie.getDirector().getName());
-                for(Genre genre : movie.getGenres()){
-                    LOG.info("MovieService | update | Movie Genre : " + genre.getName());
-                }
+            existingMovie.setId(id);
+            existingMovie.setName(movie.getName());
+            existingMovie.setRating(movie.getRating());
+            existingMovie.setDirector(movie.getDirector());
+            existingMovie.setGenres(movie.getGenres());
+            existingMovie.setCreatedAt(movie.getCreatedAt());
 
-                movieRepository.save(existingMovie);
+            LOG.info("MovieService | update | Movie Id : " +existingMovie.getId());
+            LOG.info("MovieService | update | Movie Name : " +existingMovie.getName());
+            LOG.info("MovieService | update | Movie Created Date : " + existingMovie.getCreatedAt());
+            LOG.info("MovieService | update | Movie Rating : " + existingMovie.getRating());
+            LOG.info("MovieService | update | Movie Director : " +existingMovie.getDirector().getName());
+            for(Genre genre : existingMovie.getGenres()){
+                LOG.info("MovieService | update | Movie Genre : " + genre.getName());
+            }
 
-                }, () -> {
-                    throw new RuntimeException("No Record With this Id!");
-                }
-        );
+            movieRepository.save(existingMovie);
+        }
 
     }
 
