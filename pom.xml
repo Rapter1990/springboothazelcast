@@ -65,6 +65,12 @@
             <version>${hazelcast.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast-spring</artifactId>
+            <version>${hazelcast.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
