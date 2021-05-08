@@ -16,7 +16,7 @@ public class HazelcastConfiguration {
                 .setInstanceName("hazelcast-instance")
                 .addMapConfig(
                         new MapConfig()
-                                .setName("movies")
+                                .setName("movies-cache")
                                 .setTimeToLiveSeconds(20));
     }
 
