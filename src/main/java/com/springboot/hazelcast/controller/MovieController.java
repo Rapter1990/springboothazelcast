@@ -37,20 +37,20 @@ public class MovieController {
         return movieService.findById(id);
     }
 
-    @CachePut(value = "movies", key = "#id")
+    @CachePut(value = "movies", key = "#movie.id")
     @PostMapping("/save")
-    public Movie saveEmployee(@RequestBody Movie employee) throws ParseException {
+    public Movie saveEmployee(@RequestBody Movie movie) throws ParseException {
         LOG.info("Saving Movie.");
-        movieService.save(employee);
-        return employee;
+        movieService.save(movie);
+        return movie;
     }
 
-    @CachePut(value = "movies", key = "#id")
+    @CachePut(value = "movies", key = "#movie.id")
     @PutMapping("/update/{id}")
-    public Movie updateEmployee(@RequestBody Movie employee,@PathVariable Long id) {
+    public Movie updateEmployee(@RequestBody Movie movie,@PathVariable Long id) {
         LOG.info("Updating Movie with id {}", id);
-        movieService.update(id,employee);
-        return employee;
+        movieService.update(id,movie);
+        return movie;
     }
 
     @CacheEvict(value = "movies", allEntries=true)
