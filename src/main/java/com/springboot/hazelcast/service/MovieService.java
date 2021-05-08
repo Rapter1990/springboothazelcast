@@ -2,6 +2,7 @@ package com.springboot.hazelcast.service;
 
 import com.springboot.hazelcast.model.Movie;
 import com.springboot.hazelcast.repository.MovieRepository;
+import com.springboot.hazelcast.service.impl.IMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,26 +13,30 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class MovieService {
+public class MovieService implements IMovieService {
 
     @Autowired
     MovieRepository movieRepository;
 
+    @Override
     public List<Movie> findAll() {
         List<Movie> movieList = new ArrayList<>();
         movieRepository.findAll().forEach(movieList::add);
         return movieList;
     }
 
+    @Override
     public Optional<Movie> findById(Long id) {
         return movieRepository.findById(id);
     }
 
+    @Override
     public void save(Movie movie) {
 
         movieRepository.save(movie);
     }
 
+    @Override
     public void update(Long id,Movie movie) {
 
         boolean isUpdatingMovie = (movie.getId() == id);
@@ -50,7 +55,7 @@ public class MovieService {
 
     }
 
-
+    @Override
     public void deleteMovieByID(Long id) {
         Optional<Movie> movie = movieRepository.findById(id);
         if(movie.isPresent()) {
