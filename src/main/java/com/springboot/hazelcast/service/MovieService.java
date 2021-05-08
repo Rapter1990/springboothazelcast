@@ -56,6 +56,7 @@ public class MovieService implements IMovieService {
             existingMovie.setRating(movie.getRating());
             existingMovie.setDirector(movie.getDirector());
             existingMovie.setGenres(movie.getGenres());
+            existingMovie.setCreatedAt(movie.getCreatedAt());
 
             movieRepository.save(existingMovie);
         }
