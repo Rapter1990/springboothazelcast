@@ -15,6 +15,7 @@
     <description>Hazelcast for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
+        <hazelcast.version>4.2</hazelcast.version>
     </properties>
     <dependencies>
 
@@ -51,6 +52,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast-all</artifactId>
+            <version>${hazelcast.version}</version>
         </dependency>
 
     </dependencies>
