@@ -1,6 +1,5 @@
 package com.springboot.hazelcast.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
@@ -15,7 +14,6 @@ import java.util.Set;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Movie implements Serializable {
 
     @Id
