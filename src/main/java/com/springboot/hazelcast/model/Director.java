@@ -1,5 +1,6 @@
 package com.springboot.hazelcast.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class Director implements Serializable {
     @NonNull
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy="director",cascade = CascadeType.ALL)
     private Set<Movie> movies;
 }

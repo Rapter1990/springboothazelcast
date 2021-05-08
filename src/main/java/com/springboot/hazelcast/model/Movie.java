@@ -1,5 +1,6 @@
 package com.springboot.hazelcast.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,6 +24,7 @@ public class Movie implements Serializable {
 
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy="movie",cascade = CascadeType.ALL)
     private Set<Genre> genres;
 
@@ -31,6 +33,7 @@ public class Movie implements Serializable {
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private LocalDate createdAt;
 
+    @JsonIgnore
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn
     private Director director;
