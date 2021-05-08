@@ -30,14 +30,14 @@ public class MovieController {
         return movieService.findAll();
     }
 
-    @Cacheable(value = "movies", key = "#movie.id")
+    @Cacheable(value = "movies", key = "#id")
     @GetMapping("/find/{id}")
     public Optional<Movie> findById(@PathVariable Long id) {
         LOG.info("Getting Movie with ID {}.", id);
         return movieService.findById(id);
     }
 
-    @CachePut(value = "movies", key = "#movie.id")
+    @CachePut(value = "movies", key = "#id")
     @PostMapping("/save")
     public Movie saveEmployee(@RequestBody Movie employee) throws ParseException {
         LOG.info("Saving Movie.");
@@ -45,7 +45,7 @@ public class MovieController {
         return employee;
     }
 
-    @CachePut(value = "movies", key = "#movie.id")
+    @CachePut(value = "movies", key = "#id")
     @PutMapping("/update/{id}")
     public Movie updateEmployee(@RequestBody Movie employee,@PathVariable Long id) {
         LOG.info("Updating Movie with id {}", id);
