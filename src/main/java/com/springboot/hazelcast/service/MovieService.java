@@ -1,6 +1,7 @@
 package com.springboot.hazelcast.service;
 
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.map.IMap;
 import com.springboot.hazelcast.model.Genre;
 import com.springboot.hazelcast.model.Movie;
 import com.springboot.hazelcast.repository.MovieRepository;
@@ -82,6 +83,8 @@ public class MovieService implements IMovieService {
 
         LOG.info("MovieService | save |  Movie Create Date : " +movie.getCreatedAt());
 
+        createData(String.valueOf(movie.getId()),movie.getName());
+
         return movieRepository.save(movie);
     }
 
@@ -106,6 +109,7 @@ public class MovieService implements IMovieService {
             LOG.info("MovieService | update | Movie Genre : " + genre.getName());
         }
 
+        updateData(String.valueOf(id),movie.getName());
         return movieRepository.save(existingMovie);
 
     }
@@ -128,11 +132,28 @@ public class MovieService implements IMovieService {
         Optional<Movie> movie = movieRepository.findById(id);
         if(movie.isPresent()) {
             Movie deletedMovie= movie.get();
+            deleteData(String.valueOf(deletedMovie.getId()));
             movieRepository.delete(deletedMovie);
         }
     }
 
     public Collection<Object> readAllDataFromHazelcast() {
         return hazelcastInstance.getMap("movies-cache").values();
+    }
+
+    public void createData(String key, String value) {
+        IMap<String, String> map = hazelcastInstance.getMap("movies-cache");
+        map.put(key, value);
+    }
+
+    public void updateData(String key, String value) {
+        IMap<String, String> map = hazelcastInstance.getMap("movies-cache");
+        map.set(key, value);
+    }
+
+
+    public void deleteData(String key) {
+        IMap<String, String> map = hazelcastInstance.getMap("movies-cache");
+        map.remove(key);
     }
 }
