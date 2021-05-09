@@ -4,6 +4,7 @@ import com.springboot.hazelcast.model.Director;
 import com.springboot.hazelcast.model.Genre;
 import com.springboot.hazelcast.model.Movie;
 import com.springboot.hazelcast.repository.MovieRepository;
+import com.springboot.hazelcast.service.MovieService;
 import com.springboot.hazelcast.utils.Utils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED)
 class HazelcastApplicationTests {
 
-    MovieRepository repo;
+    MovieService movieService;
 
     HazelcastInstance hazelcastInstance;
 
     @Autowired
-    public HazelcastApplicationTests(MovieRepository repo, @Qualifier("hazelcastInstance") HazelcastInstance hazelcastInstance) {
-        this.repo = repo;
+    public HazelcastApplicationTests(MovieService movieService, @Qualifier("hazelcastInstance") HazelcastInstance hazelcastInstance) {
+        this.movieService = movieService;
         this.hazelcastInstance = hazelcastInstance;
     }
 
@@ -41,9 +42,6 @@ class HazelcastApplicationTests {
         Movie movie = new Movie();
         movie.setName("Movie A");
         movie.setRating(7.5);
-
-        LocalDate now = Utils.formatDate(LocalDate.now());
-        movie.setCreatedAt(now);
 
         Director movieDirector = new Director();
         movieDirector.setName("Director 1");
@@ -61,7 +59,7 @@ class HazelcastApplicationTests {
 
         movie.setGenres(genres);
 
-        Movie createdMovie = repo.save(movie);
+        Movie createdMovie = movieService.save(movie);
         System.out.println("createdMovie Id : " + createdMovie.getId());
 
         assertThat(createdMovie.getId()).isGreaterThan(0);
@@ -74,18 +72,7 @@ class HazelcastApplicationTests {
         createMovie();
 
         Long id = 1L;
-        Movie movie = repo.findById(id).get();
-        System.out.println("Movie : " +movie.getName());
-        System.out.println("Movie Created: " + Utils.formatDate(movie.getCreatedAt()));
-
-        Set<Genre> childrenGenre = movie.getGenres();
-
-        for (Genre subCategory : childrenGenre) {
-            System.out.println("Genre : " + subCategory.getName());
-        }
-
-        Director movieDirector = movie.getDirector();
-        System.out.println("Director : " + movieDirector.getName());
+        Movie movie = movieService.findById(id).get();
 
         assertThat(movie.getId()).isGreaterThan(0);
     }
@@ -95,19 +82,7 @@ class HazelcastApplicationTests {
 
         createMovie();
 
-        List<Movie> movieList = (List<Movie>) repo.findAll();
-
-        for(Movie movie: movieList){
-            System.out.println("Movie Id : " +movie.getId());
-            System.out.println("Movie Name : " +movie.getName());
-            System.out.println("Movie Created Date : " + movie.getCreatedAt());
-            System.out.println("Movie Rating : " + movie.getRating());
-            System.out.println("Movie Director : " +movie.getDirector().getName());
-            for(Genre genre : movie.getGenres()){
-                System.out.println("Movie Genre : " + genre.getName());
-            }
-
-        }
+        List<Movie> movieList =  movieService.findAll();
 
         assertThat(movieList.size()).isGreaterThan(0);
     }
@@ -118,7 +93,7 @@ class HazelcastApplicationTests {
         createMovie();
 
         Long id = 1L;
-        Movie movie = repo.findById(id).get();
+        Movie movie = movieService.findById(id).get();
 
         movie.setName("Movie B");
         movie.setRating(7.5);
@@ -140,15 +115,8 @@ class HazelcastApplicationTests {
         genres.add(genreFirst);
         genres.add(genreSecond);
 
-        Movie updatedMovie = repo.save(movie);
+        Movie updatedMovie = movieService.update(id,movie);
 
-        System.out.println("Movie : " +updatedMovie.getName());
-        System.out.println("Movie Created: " + Utils.formatDate(updatedMovie.getCreatedAt()));
-        System.out.println("Movie Rating : " + movie.getRating());
-        System.out.println("Movie Director : " +movie.getDirector().getName());
-        for(Genre genre : movie.getGenres()){
-            System.out.println("Movie Genre : " + genre.getName());
-        }
 
         assertThat(updatedMovie.getId()).isGreaterThan(0);
     }
@@ -159,8 +127,7 @@ class HazelcastApplicationTests {
         createMovie();
 
         Long id = 1L;
-        Movie movie = repo.findById(id).get();
-        repo.delete(movie);
+        movieService.deleteMovieByID(id);
 
     }
 
@@ -169,10 +136,6 @@ class HazelcastApplicationTests {
 
         createMovie();
 
-        Collection movieCollection = hazelcastInstance.getMap("movies-cache").values();
-        Iterator<Movie> iterator = movieCollection.iterator();
-        while (iterator.hasNext()) {
-            System.out.println("value : " + iterator.next());
-        }
+        movieService.readAllDataFromHazelcast();
     }
 }
