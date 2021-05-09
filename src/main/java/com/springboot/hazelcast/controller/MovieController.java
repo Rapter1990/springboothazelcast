@@ -25,7 +25,6 @@ public class MovieController {
     MovieService movieService;
 
     // http://localhost:8082/api/v1/movie/find/all
-    @Cacheable("movies")
     @GetMapping("/find/all")
     public List<Movie> findAll() {
         LOG.info("MovieController | Getting All Movies");
@@ -33,7 +32,6 @@ public class MovieController {
     }
 
     // http://localhost:8082/api/v1/movie/find/1
-    @Cacheable(value = "movies", key = "#id")
     @GetMapping("/find/{id}")
     public Optional<Movie> findById(@PathVariable Long id) {
         LOG.info("MovieController | Getting Movie with ID {}.", id);
@@ -87,7 +85,6 @@ public class MovieController {
     * */
 
     // http://localhost:8082/api/v1/movie/update/1
-    @CachePut(value = "movies", key = "#id")
     @PutMapping("/update/{id}")
     public Movie updateMovie(@RequestBody Movie movie,@PathVariable Long id) {
         LOG.info("MovieController | Updating Movie with id {}", id);
@@ -95,7 +92,6 @@ public class MovieController {
     }
 
     // http://localhost:8082/api/v1/movie/delete/1
-    @CacheEvict(value = "movies", allEntries=true)
     @DeleteMapping("/delete/{id}")
     public void deleteMovieByID(@PathVariable Long id) {
         LOG.info("MovieController | Deleting Movie with id {}", id);

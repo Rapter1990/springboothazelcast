@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,7 +84,7 @@ public class MovieService implements IMovieService {
 
         LOG.info("MovieService | save |  Movie Create Date : " +movie.getCreatedAt());
 
-        createData(String.valueOf(movie.getId()),movie.getName());
+        createData(movie.getName(),movie.getName());
 
         return movieRepository.save(movie);
     }
@@ -109,7 +110,7 @@ public class MovieService implements IMovieService {
             LOG.info("MovieService | update | Movie Genre : " + genre.getName());
         }
 
-        updateData(String.valueOf(id),movie.getName());
+        updateData(movie.getName(),movie.getName());
         return movieRepository.save(existingMovie);
 
     }
@@ -132,28 +133,39 @@ public class MovieService implements IMovieService {
         Optional<Movie> movie = movieRepository.findById(id);
         if(movie.isPresent()) {
             Movie deletedMovie= movie.get();
-            deleteData(String.valueOf(deletedMovie.getId()));
+            deleteData(deletedMovie.getName());
             movieRepository.delete(deletedMovie);
         }
     }
 
     public Collection<Object> readAllDataFromHazelcast() {
+        Collection movieCollection = hazelcastInstance.getMap("movies-cache").values();
+        Iterator<Movie> iterator = movieCollection.iterator();
+        while (iterator.hasNext()) {
+            LOG.info("MovieService | readAllDataFromHazelcast |  value : " + iterator.next());
+        }
+
         return hazelcastInstance.getMap("movies-cache").values();
     }
 
     public void createData(String key, String value) {
         IMap<String, String> map = hazelcastInstance.getMap("movies-cache");
         map.put(key, value);
+        LOG.info("MovieService | createData |  key : " +key);
+        LOG.info("MovieService | createData |  value : " +value);
     }
 
     public void updateData(String key, String value) {
         IMap<String, String> map = hazelcastInstance.getMap("movies-cache");
         map.set(key, value);
+        LOG.info("MovieService | updateData |  key : " +key);
+        LOG.info("MovieService | updateData |  value : " +value);
     }
 
 
     public void deleteData(String key) {
         IMap<String, String> map = hazelcastInstance.getMap("movies-cache");
         map.remove(key);
+        LOG.info("MovieService | deleteData |  key : " +key);
     }
 }
