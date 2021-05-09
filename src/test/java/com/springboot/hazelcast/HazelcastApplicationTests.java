@@ -162,7 +162,6 @@ class HazelcastApplicationTests {
         Movie movie = repo.findById(id).get();
         repo.delete(movie);
 
-
     }
 
     @Test
