@@ -24,8 +24,7 @@ public class Genre implements Serializable {
     @NonNull
     private String name;
 
-    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "movie_id")
+    @JoinColumn
     private Movie movie;
 }

@@ -24,7 +24,6 @@ public class Movie implements Serializable {
 
     private String name;
 
-    @JsonManagedReference
     @OneToMany(mappedBy="movie",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Genre> genres = new HashSet<>();
 

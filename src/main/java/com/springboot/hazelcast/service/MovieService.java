@@ -84,6 +84,10 @@ public class MovieService implements IMovieService {
 
         LOG.info("MovieService | save |  Movie Create Date : " +movie.getCreatedAt());
 
+        for(Genre genre : movie.getGenres()){
+            LOG.info("MovieService | save | Movie Genre : " + genre.getName());
+        }
+
         createData(movie.getName(),movie.getName());
 
         return movieRepository.save(movie);
@@ -135,6 +139,7 @@ public class MovieService implements IMovieService {
             Movie deletedMovie= movie.get();
             deleteData(deletedMovie.getName());
             movieRepository.delete(deletedMovie);
+            LOG.info("MovieService | deleteMovieByID | deleted ");
         }
     }
 
