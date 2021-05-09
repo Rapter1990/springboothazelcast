@@ -60,8 +60,7 @@ public class MovieController {
     @PostMapping("/save")
     public Movie saveMovie(@RequestBody Movie movie) throws ParseException {
         LOG.info("MovieController | Saving Movie.");
-        movieService.save(movie);
-        return movie;
+        return movieService.save(movie);
     }
 
     /*
@@ -87,8 +86,7 @@ public class MovieController {
     @PutMapping("/update/{id}")
     public Movie updateMovie(@RequestBody Movie movie,@PathVariable Long id) {
         LOG.info("MovieController | Updating Movie with id {}", id);
-        movieService.update(id,movie);
-        return movie;
+        return movieService.update(id,movie);
     }
 
     @CacheEvict(value = "movies", allEntries=true)

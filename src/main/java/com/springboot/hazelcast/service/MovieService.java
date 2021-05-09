@@ -81,7 +81,7 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public void update(Long id,Movie movie) {
+    public Movie update(Long id,Movie movie) {
 
         boolean isUpdatingEmployee = (movie.getId() == id);
 
@@ -104,9 +104,10 @@ public class MovieService implements IMovieService {
                 LOG.info("MovieService | update | Movie Genre : " + genre.getName());
             }
 
-            movieRepository.save(existingMovie);
+            return movieRepository.save(existingMovie);
         }
 
+        return null;
     }
 
     @Override

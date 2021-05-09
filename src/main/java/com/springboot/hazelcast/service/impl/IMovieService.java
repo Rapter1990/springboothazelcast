@@ -11,6 +11,6 @@ public interface IMovieService {
     public List<Movie> findAll();
     public Optional<Movie> findById(Long id);
     public Movie save(Movie movie) throws ParseException;
-    public void update(Long id,Movie movie);
+    public Movie update(Long id,Movie movie);
     public void deleteMovieByID(Long id);
 }
