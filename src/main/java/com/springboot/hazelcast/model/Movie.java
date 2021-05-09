@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,7 +25,7 @@ public class Movie implements Serializable {
 
     @JsonManagedReference
     @OneToMany(mappedBy="movie",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Set<Genre> genres;
+    private Set<Genre> genres = new HashSet<>();
 
     private Double rating;
 
