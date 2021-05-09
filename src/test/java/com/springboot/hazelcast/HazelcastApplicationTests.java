@@ -99,17 +99,17 @@ class HazelcastApplicationTests {
         movie.setRating(7.5);
 
         Director movieDirector = new Director();
-        movieDirector.setName("Director 1");
+        movieDirector.setName("Director 2");
         movie.setDirector(movieDirector);
 
         LocalDate now = Utils.formatDate(LocalDate.of(2019, Month.JANUARY, 1));
         movie.setCreatedAt(now);
 
         Genre genreFirst = new Genre();
-        genreFirst.setName("Action");
+        genreFirst.setName("Historical");
 
         Genre genreSecond = new Genre();
-        genreSecond.setName("Action");
+        genreSecond.setName("Horror");
 
         Set<Genre> genres = new HashSet<>();
         genres.add(genreFirst);
