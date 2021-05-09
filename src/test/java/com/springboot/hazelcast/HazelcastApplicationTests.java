@@ -4,6 +4,7 @@ import com.springboot.hazelcast.model.Director;
 import com.springboot.hazelcast.model.Genre;
 import com.springboot.hazelcast.model.Movie;
 import com.springboot.hazelcast.repository.MovieRepository;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -52,6 +53,8 @@ class HazelcastApplicationTests {
         genres.add(genreFirst);
         genres.add(genreSecond);
 
+        movie.setGenres(genres);
+
         Movie createdMovie = repo.save(movie);
         System.out.println("createdMovie Id : " + createdMovie.getId());
         assertThat(createdMovie.getId()).isGreaterThan(0);
@@ -60,6 +63,9 @@ class HazelcastApplicationTests {
 
     @Test
     void getMovieById() {
+
+        createMovie();
+
         Long id = 1L;
         Movie movie = repo.findById(id).get();
         System.out.println("Movie : " +movie.getName());
@@ -78,6 +84,8 @@ class HazelcastApplicationTests {
 
     @Test
     void getAllMovies() {
+
+        createMovie();
 
         List<Movie> movieList = (List<Movie>) repo.findAll();
 
@@ -98,6 +106,9 @@ class HazelcastApplicationTests {
 
     @Test
     void updateMovieById() {
+
+        createMovie();
+
         Long id = 1L;
         Movie movie = repo.findById(id).get();
 
@@ -124,6 +135,9 @@ class HazelcastApplicationTests {
 
     @Test
     void deleteMovieById() {
+
+        createMovie();
+
         Long id = 1L;
         Movie movie = repo.findById(id).get();
         repo.delete(movie);
@@ -133,6 +147,9 @@ class HazelcastApplicationTests {
 
     @Test
     void getAllMovieFromHazelcast() {
+
+        createMovie();
+
         Collection movieCollection = hazelcastInstance.getMap("movies-cache").values();
         Iterator<Movie> iterator = movieCollection.iterator();
         while (iterator.hasNext()) {
