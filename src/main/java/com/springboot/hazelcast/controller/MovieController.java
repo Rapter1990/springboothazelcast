@@ -24,6 +24,7 @@ public class MovieController {
     @Autowired
     MovieService movieService;
 
+    // http://localhost:8082/api/v1/movie/find/all
     @Cacheable("movies")
     @GetMapping("/find/all")
     public List<Movie> findAll() {
@@ -31,6 +32,7 @@ public class MovieController {
         return movieService.findAll();
     }
 
+    // http://localhost:8082/api/v1/movie/find/1
     @Cacheable(value = "movies", key = "#id")
     @GetMapping("/find/{id}")
     public Optional<Movie> findById(@PathVariable Long id) {
@@ -57,6 +59,7 @@ public class MovieController {
     }
     * */
 
+    // http://localhost:8082/api/v1/movie/save
     @PostMapping("/save")
     public Movie saveMovie(@RequestBody Movie movie) throws ParseException {
         LOG.info("MovieController | Saving Movie.");
@@ -82,6 +85,8 @@ public class MovieController {
         }
 
     * */
+
+    // http://localhost:8082/api/v1/movie/update/1
     @CachePut(value = "movies", key = "#id")
     @PutMapping("/update/{id}")
     public Movie updateMovie(@RequestBody Movie movie,@PathVariable Long id) {
@@ -89,14 +94,16 @@ public class MovieController {
         return movieService.update(id,movie);
     }
 
+    // http://localhost:8082/api/v1/movie/delete/1
     @CacheEvict(value = "movies", allEntries=true)
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteMovieByID(@PathVariable Long id) {
         LOG.info("MovieController | Deleting Movie with id {}", id);
         movieService.deleteMovieByID(id);
     }
 
-    @GetMapping(value = "/read-all-data")
+
+    @GetMapping("/read-all-data")
     public Collection<Object> getAllData() {
         LOG.info("get All Data from Hazelcast");
         return movieService.readAllDataFromHazelcast();
