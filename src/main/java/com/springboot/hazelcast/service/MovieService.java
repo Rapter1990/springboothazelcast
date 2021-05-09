@@ -1,7 +1,6 @@
 package com.springboot.hazelcast.service;
 
 import com.hazelcast.core.HazelcastInstance;
-import com.springboot.hazelcast.model.Director;
 import com.springboot.hazelcast.model.Genre;
 import com.springboot.hazelcast.model.Movie;
 import com.springboot.hazelcast.repository.MovieRepository;
@@ -10,6 +9,7 @@ import com.springboot.hazelcast.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,10 +25,15 @@ public class MovieService implements IMovieService {
 
     private final Logger LOG = LoggerFactory.getLogger(getClass());
 
-    @Autowired
     MovieRepository movieRepository;
 
     HazelcastInstance hazelcastInstance;
+
+    @Autowired
+    public MovieService(MovieRepository movieRepository, @Qualifier("hazelcastInstance") HazelcastInstance hazelcastInstance) {
+        this.movieRepository = movieRepository;
+        this.hazelcastInstance = hazelcastInstance;
+    }
 
     @Override
     public List<Movie> findAll() {
