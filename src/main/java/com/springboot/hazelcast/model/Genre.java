@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table
 @Getter
 @Setter
 @ToString
@@ -25,6 +26,6 @@ public class Genre implements Serializable {
 
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn
+    @JoinColumn(name = "movie_id")
     private Movie movie;
 }

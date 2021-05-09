@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
+@Table
 @Getter
 @Setter
 @ToString
