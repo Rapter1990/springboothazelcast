@@ -102,7 +102,7 @@ public class MovieController {
         movieService.deleteMovieByID(id);
     }
 
-
+    // http://localhost:8082/api/v1/movie/read-all-data
     @GetMapping("/read-all-data")
     public Collection<Object> getAllData() {
         LOG.info("get All Data from Hazelcast");
