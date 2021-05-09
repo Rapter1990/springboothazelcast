@@ -115,6 +115,8 @@ class HazelcastApplicationTests {
         genres.add(genreFirst);
         genres.add(genreSecond);
 
+        movie.setGenres(genres);
+
         Movie updatedMovie = movieService.update(id,movie);
 
 
