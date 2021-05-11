@@ -11,7 +11,6 @@ import java.util.Set;
 @Table
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties({"movies"})

@@ -11,7 +11,6 @@ import java.io.Serializable;
 @Table
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties({"movie"})

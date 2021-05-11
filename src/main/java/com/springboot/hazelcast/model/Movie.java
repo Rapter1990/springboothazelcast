@@ -13,7 +13,6 @@ import java.util.Set;
 @Table
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Movie implements Serializable {
