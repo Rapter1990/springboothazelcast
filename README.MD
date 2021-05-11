@@ -7,6 +7,7 @@
 <ul style="list-style-type:disc">
   <li>Information 1</li>
   <li>Information 2</li>
+  <li>Information 3</li>
   <li>Here is the explanation of the project
       <ul>
         <li></li>
