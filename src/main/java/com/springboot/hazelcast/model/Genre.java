@@ -23,7 +23,7 @@ public class Genre implements Serializable {
     @NonNull
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JoinColumn
     private Movie movie;
 

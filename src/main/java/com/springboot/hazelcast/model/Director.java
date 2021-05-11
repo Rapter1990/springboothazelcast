@@ -23,7 +23,7 @@ public class Director implements Serializable {
     @NonNull
     private String name;
 
-    @OneToMany(mappedBy="director",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy="director",cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     private Set<Movie> movies;
 
     public void addMovie(Movie movie) {
