@@ -30,10 +30,15 @@ public class Genre implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Genre)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Genre genre = (Genre) o;
-        return Objects.equals(getId(), genre.getId());
+        return id != null &&
+                id.equals(genre.id);
     }
 
     @Override
