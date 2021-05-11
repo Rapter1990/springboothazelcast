@@ -93,6 +93,7 @@ class HazelcastApplicationTests {
 
         Long id = 1L;
         Movie movie = movieService.findById(id).get();
+        movie.removeAllGenres();
 
         movie.setName("Movie B");
         movie.setRating(7.5);

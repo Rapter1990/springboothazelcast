@@ -39,6 +39,10 @@ public class Movie implements Serializable {
         this.genres.add(genre);
     }
 
+    public void removeAllGenres(){
+        this.genres.clear();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
