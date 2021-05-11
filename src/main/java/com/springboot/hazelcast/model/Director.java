@@ -14,6 +14,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties({"movies"})
+@EqualsAndHashCode(exclude = "movies")
 public class Director implements Serializable {
 
     @Id
