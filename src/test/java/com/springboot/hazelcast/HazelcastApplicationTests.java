@@ -55,11 +55,8 @@ class HazelcastApplicationTests {
         genreSecond.setName("Action");
         genreSecond.setMovie(movie);
 
-        Set<Genre> genres = new HashSet<>();
-        genres.add(genreFirst);
-        genres.add(genreSecond);
-
-        movie.setGenres(genres);
+        movie.addGenre(genreFirst);
+        movie.addGenre(genreSecond);
 
         Movie createdMovie = movieService.save(movie);
         System.out.println("createdMovie Id : " + createdMovie.getId());
@@ -115,11 +112,8 @@ class HazelcastApplicationTests {
         genreSecond.setName("Horror");
         genreSecond.setMovie(movie);
 
-        Set<Genre> genres = new HashSet<>();
-        genres.add(genreFirst);
-        genres.add(genreSecond);
-
-        movie.setGenres(genres);
+        movie.addGenre(genreFirst);
+        movie.addGenre(genreSecond);
 
         Movie updatedMovie = movieService.update(id,movie);
 

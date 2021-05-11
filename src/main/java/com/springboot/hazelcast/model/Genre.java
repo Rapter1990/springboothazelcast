@@ -26,4 +26,5 @@ public class Genre implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn
     private Movie movie;
+
 }

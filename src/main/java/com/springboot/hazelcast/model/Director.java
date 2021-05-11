@@ -25,4 +25,9 @@ public class Director implements Serializable {
 
     @OneToMany(mappedBy="director",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Movie> movies;
+
+    public void addMovie(Movie movie) {
+        this.movies.add(movie);
+    }
+
 }

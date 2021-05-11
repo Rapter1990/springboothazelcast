@@ -30,8 +30,12 @@ public class Movie implements Serializable {
 
     private LocalDate createdAt;
 
-
     @ManyToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn
     private Director director;
+
+    public void addGenre(Genre genre) {
+        this.genres.add(genre);
+    }
+
 }
