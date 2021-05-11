@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -14,7 +15,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties({"movies"})
-@EqualsAndHashCode(exclude = "movies")
 public class Director implements Serializable {
 
     @Id
@@ -31,4 +31,16 @@ public class Director implements Serializable {
         this.movies.add(movie);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Director)) return false;
+        Director director = (Director) o;
+        return Objects.equals(getId(), director.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }
