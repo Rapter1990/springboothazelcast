@@ -38,51 +38,12 @@ public class MovieController {
         return movieService.findById(id);
     }
 
-    /*
-
-    {
-        "name": "MovieB",
-        "genres": [
-            {
-                "name" : "Comedy"
-            },
-            {
-                "name" : "Action"
-            }
-        ],
-        "rating" : 8.5,
-        "director" : {
-            "name" : "Director 1"
-        }
-    }
-    * */
-
     // http://localhost:8082/api/v1/movie/save
     @PostMapping("/save")
     public Movie saveMovie(@RequestBody Movie movie) throws ParseException {
         LOG.info("MovieController | Saving Movie.");
         return movieService.save(movie);
     }
-
-    /*
-        {
-            "name": "MovieC",
-            "genres": [
-                {
-                    "name" : "Adventure"
-                },
-                {
-                    "name" : "Action"
-                }
-            ],
-            "createdAt": "2021-04-28",
-                "rating" : 9,
-                "director" : {
-            "name" : "Director 2"
-        }
-        }
-
-    * */
 
     // http://localhost:8082/api/v1/movie/update/1
     @PutMapping("/update/{id}")

@@ -5,27 +5,18 @@
 ### 📖 Information
 
 <ul style="list-style-type:disc">
-  <li>Information 1</li>
-  <li>Information 2</li>
-  <li>Information 3</li>
-  <li>Here is the explanation of the project
-      <ul>
-        <li></li>
-      </ul>
-  </li>
+  <li>This project provides the usage of <b>Hazelcast</b> in Spring Boot</li>
+  <li>The usage of <b>Hazelcast</b> is sensible as it reduces the query load on databases and helps improve application speed</li>
+  <li>Through <b>Hazelcast</b>, it calls frequently used data along scalable data grid without calling it from database</li>
 </ul>
 
 ### 🔨 Run the App
 
-<b>1 )</b> 
+<b>1 ) Load Maven Dependency in <b>pom.xml</b> file </b> 
 
-<b>2 )</b> 
+<b>2 ) Run the <b>app</b> 
 
-<b>3 )</b> 
-
-<b>4 )</b> 
-
-<b>5 )</b>
+<b>3 ) Call each test function in <b>HazelcastApplicationTests</b>  which is located under test folder</b> 
 
 
 ### Screenshots
