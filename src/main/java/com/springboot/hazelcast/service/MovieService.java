@@ -31,7 +31,7 @@ public class MovieService implements IMovieService {
 
     HazelcastInstance hazelcastInstance;
 
-    private IMap<String, String> map;
+    private IMap<Long, Movie> map;
 
     @Autowired
     public MovieService(MovieRepository movieRepository, @Qualifier("hazelcastInstance") HazelcastInstance hazelcastInstance) {
@@ -62,7 +62,16 @@ public class MovieService implements IMovieService {
     @Override
     public Optional<Movie> findById(Long id) {
 
-        Movie movieFindById = movieRepository.findById(id).get();
+        Movie movieFindById = new Movie();
+
+        if(map.get(id) != null){
+            LOG.info("MovieService | findById | map.get(id)");
+            movieFindById = map.get(id);
+        }else{
+            LOG.info("MovieService | findById | movieRepository.findById(id).get()");
+            movieFindById = movieRepository.findById(id).get();
+        }
+
         LOG.info("MovieService | findById |  Movie Id : " +movieFindById.getId());
         LOG.info("MovieService | findById | Movie Name : " +movieFindById.getName());
         LOG.info("MovieService | findById | Movie Created Date : " + movieFindById.getCreatedAt());
@@ -90,15 +99,21 @@ public class MovieService implements IMovieService {
             LOG.info("MovieService | save | Movie Genre : " + genre.getName());
         }
 
-        createData(String.valueOf(movie.getId()),movie.getName());
-
         return movieRepository.save(movie);
     }
 
     @Override
     public Movie update(Long id,Movie movie) {
 
-        Movie existingMovie = movieRepository.findById(id).get();
+        Movie existingMovie = new Movie();
+
+        if(map.get(id) != null){
+            LOG.info("MovieService | update | map.get(id)");
+            existingMovie = map.get(id);
+        }else{
+            LOG.info("MovieService | update | movieRepository.findById(id).get()");
+            existingMovie = movieRepository.findById(id).get();
+        }
 
         existingMovie.setId(id);
         existingMovie.setName(movie.getName());
@@ -116,7 +131,7 @@ public class MovieService implements IMovieService {
             LOG.info("MovieService | update | Movie Genre : " + genre.getName());
         }
 
-        updateData(String.valueOf(movie.getId()),movie.getName());
+        updateData(movie.getId(),movie);
         return movieRepository.save(existingMovie);
 
     }
@@ -124,7 +139,15 @@ public class MovieService implements IMovieService {
     @Override
     public void deleteMovieByID(Long id) {
 
-        Movie movieDeleteMovieByID = movieRepository.findById(id).get();
+        Movie movieDeleteMovieByID = new Movie();
+
+        if(map.get(id) != null){
+            LOG.info("MovieService | deleteMovieByID | map.get(id)");
+            movieDeleteMovieByID = map.get(id);
+        }else{
+            LOG.info("MovieService | deleteMovieByID | movieRepository.findById(id).get()");
+            movieDeleteMovieByID = movieRepository.findById(id).get();
+        }
 
         LOG.info("MovieService | deleteMovieByID |  Movie Id : " +movieDeleteMovieByID.getId());
         LOG.info("MovieService | deleteMovieByID | Movie Name : " +movieDeleteMovieByID.getName());
@@ -139,7 +162,7 @@ public class MovieService implements IMovieService {
         Optional<Movie> movie = movieRepository.findById(id);
         if(movie.isPresent()) {
             Movie deletedMovie= movie.get();
-            deleteData(String.valueOf(deletedMovie.getId()));
+            deleteData(deletedMovie.getId());
             movieRepository.delete(deletedMovie);
             LOG.info("MovieService | deleteMovieByID | deleted ");
         }
@@ -155,22 +178,22 @@ public class MovieService implements IMovieService {
         return hazelcastInstance.getMap("movies-cache").values();
     }
 
-    public void createData(String key, String value) {
+    public void createData(Long key, Movie movie) {
         map = hazelcastInstance.getMap("movies-cache");
-        map.put(key, value);
+        map.put(key, movie);
         LOG.info("MovieService | createData |  key : " +key);
-        LOG.info("MovieService | createData |  value : " +value);
+        LOG.info("MovieService | createData |  value : " +movie);
     }
 
-    public void updateData(String key, String value) {
+    public void updateData(Long key, Movie movie) {
         map = hazelcastInstance.getMap("movies-cache");
-        map.set(key, value);
+        map.set(key, movie);
         LOG.info("MovieService | updateData |  key : " +key);
-        LOG.info("MovieService | updateData |  value : " +value);
+        LOG.info("MovieService | updateData |  value : " +movie);
     }
 
 
-    public void deleteData(String key) {
+    public void deleteData(Long key) {
         map = hazelcastInstance.getMap("movies-cache");
         map.remove(key);
         LOG.info("MovieService | deleteData |  key : " +key);

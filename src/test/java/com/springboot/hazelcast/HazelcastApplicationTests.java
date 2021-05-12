@@ -59,6 +59,7 @@ class HazelcastApplicationTests {
         movie.addGenre(genreSecond);
 
         Movie createdMovie = movieService.save(movie);
+        movieService.createData(createdMovie.getId(),createdMovie);
         System.out.println("createdMovie Id : " + createdMovie.getId());
 
         assertThat(createdMovie.getId()).isGreaterThan(0);
