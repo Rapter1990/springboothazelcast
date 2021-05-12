@@ -12,11 +12,11 @@
 
 ### 🔨 Run the App
 
-<b>1 ) Load Maven Dependency in <b>pom.xml</b> file </b> 
+<b>1 )</b> Load Maven Dependency in <b>pom.xml</b> file  
 
-<b>2 ) Run the <b>app</b> 
+<b>2 )</b> Run the <b>app</b> 
 
-<b>3 ) Call each test function in <b>HazelcastApplicationTests</b>  which is located under test folder</b> 
+<b>3 )</b> Call each test function in <b>HazelcastApplicationTests</b>  which is located under test folder 
 
 
 ### Screenshots
