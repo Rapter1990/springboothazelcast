@@ -31,6 +31,8 @@ public class MovieService implements IMovieService {
 
     HazelcastInstance hazelcastInstance;
 
+    private IMap<String, String> map;
+
     @Autowired
     public MovieService(MovieRepository movieRepository, @Qualifier("hazelcastInstance") HazelcastInstance hazelcastInstance) {
         this.movieRepository = movieRepository;
@@ -88,7 +90,7 @@ public class MovieService implements IMovieService {
             LOG.info("MovieService | save | Movie Genre : " + genre.getName());
         }
 
-        createData(movie.getName(),movie.getName());
+        createData(String.valueOf(movie.getId()),movie.getName());
 
         return movieRepository.save(movie);
     }
@@ -114,7 +116,7 @@ public class MovieService implements IMovieService {
             LOG.info("MovieService | update | Movie Genre : " + genre.getName());
         }
 
-        updateData(movie.getName(),movie.getName());
+        updateData(String.valueOf(movie.getId()),movie.getName());
         return movieRepository.save(existingMovie);
 
     }
@@ -137,7 +139,7 @@ public class MovieService implements IMovieService {
         Optional<Movie> movie = movieRepository.findById(id);
         if(movie.isPresent()) {
             Movie deletedMovie= movie.get();
-            deleteData(deletedMovie.getName());
+            deleteData(String.valueOf(deletedMovie.getId()));
             movieRepository.delete(deletedMovie);
             LOG.info("MovieService | deleteMovieByID | deleted ");
         }
@@ -154,14 +156,14 @@ public class MovieService implements IMovieService {
     }
 
     public void createData(String key, String value) {
-        IMap<String, String> map = hazelcastInstance.getMap("movies-cache");
+        map = hazelcastInstance.getMap("movies-cache");
         map.put(key, value);
         LOG.info("MovieService | createData |  key : " +key);
         LOG.info("MovieService | createData |  value : " +value);
     }
 
     public void updateData(String key, String value) {
-        IMap<String, String> map = hazelcastInstance.getMap("movies-cache");
+        map = hazelcastInstance.getMap("movies-cache");
         map.set(key, value);
         LOG.info("MovieService | updateData |  key : " +key);
         LOG.info("MovieService | updateData |  value : " +value);
@@ -169,7 +171,7 @@ public class MovieService implements IMovieService {
 
 
     public void deleteData(String key) {
-        IMap<String, String> map = hazelcastInstance.getMap("movies-cache");
+        map = hazelcastInstance.getMap("movies-cache");
         map.remove(key);
         LOG.info("MovieService | deleteData |  key : " +key);
     }
