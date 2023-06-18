@@ -99,6 +99,7 @@ public class MovieService implements IMovieService {
             LOG.info("MovieService | save | Movie Genre : " + genre.getName());
         }
 
+        createData(movie.getId(),movie);
         return movieRepository.save(movie);
     }
 
